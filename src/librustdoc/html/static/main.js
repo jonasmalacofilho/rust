@@ -1373,21 +1373,22 @@ function defocusSearchBar() {
                     while (el.tagName !== "TR") {
                         el = el.parentNode;
                     }
-                    clearTimeout(hoverTimeout);
-                    hoverTimeout = setTimeout(function() {
-                        onEachLazy(document.getElementsByClassName("search-results"), function(e) {
-                            onEachLazy(e.getElementsByClassName("result"), function(i_e) {
-                                removeClass(i_e, "highlighted");
-                            });
-                        });
-                        addClass(el, "highlighted");
-                    }, 20);
+                    addClass(el, "highlighted");
                 }
+            };
+            var mouseleave_func = function(e) {
+                var el = e.target;
+                // to retrieve the real "owner" of the event.
+                while (el.tagName !== "TR") {
+                    el = el.parentNode;
+                }
+                removeClass(el, "highlighted");
             };
             onEachLazy(document.getElementsByClassName("search-results"), function(e) {
                 onEachLazy(e.getElementsByClassName("result"), function(i_e) {
                     i_e.onclick = click_func;
                     i_e.onmouseover = mouseover_func;
+                    i_e.onmouseleave = mouseleave_func;
                 });
             });
 
